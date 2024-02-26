@@ -1,0 +1,22 @@
+services:
+  db:
+    build: .
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
